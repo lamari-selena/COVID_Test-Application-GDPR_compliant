@@ -49,3 +49,5 @@ Once the repository is cloned, go to the root of the project and go to a termina
 
 To launch the application locally :
 - npm run dev
+
+The application is then accessible at http://localhost:3000
