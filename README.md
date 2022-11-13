@@ -5,7 +5,7 @@ This part is presented as an installation guide in order to help the users of th
 To be able to deploy the application, it is first necessary to clone the code which is located on two different folders 
 (one for the front and the other for the back). To do this, go to your working folder and run the git command to clone the :
 
-1) Setting up the local environment for the backend
+# 1) Setting up the local environment for the backend
 
 Before you can run the application locally, you need to install some tools. If you have not already installed them, please proceed to the
 installation of the following applications the following applications:
@@ -40,3 +40,12 @@ Then the other services :
 You have to use these commands at the root level of the project (where the docker-compose.yml file is located in the Project). This will create a container for each microservice.
 
 The back is now functional.
+
+# 2) Setting up the local environment for the frontend
+Concerning the front end, we recommend Visual Studio Code which is the most adapted IDE to develop in javascript.
+
+Once the repository is cloned, go to the root of the project and go to a terminal. Then, type the following command to install all the dependencies of the project: 
+- npm install
+
+To launch the application locally :
+- npm run dev
