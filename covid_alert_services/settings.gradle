@@ -1,0 +1,4 @@
+rootProject.name = 'covid-alert-backend'
+
+include 'userservice', 'userdatabase', 'apigatewayservice', 'discoveryserver','location_service', 'configserver', 'vaccinationservice','covidtestservice', 'notificationservice', 'newsservice'
+

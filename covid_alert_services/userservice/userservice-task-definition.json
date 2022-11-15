@@ -1,0 +1,40 @@
+{
+  "executionRoleArn": "arn:aws:iam::961822111490:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/userservice_task",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "entryPoint": [],
+      "portMappings": [
+        {
+          "hostPort": 5000,
+          "protocol": "tcp",
+          "containerPort": 5000
+        }
+      ],
+      "command": [],
+      "cpu": 0,
+      "environment": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "memoryReservation": 256,
+      "image": "961822111490.dkr.ecr.us-east-1.amazonaws.com/covid-alert-services:userservice",
+      "name": "userservice"
+    }
+  ],
+  "placementConstraints": [],
+  "memory": "512",
+  "family": "userservice_task",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "volumes": []
+}

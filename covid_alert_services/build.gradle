@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'com.avast.gradle.docker-compose' version '0.7.1'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+allprojects {
+    apply plugin: "idea"
+    task('hello').doLast {
+        println("I'm $project.name")
+    }
+}
+dockerCompose.isRequiredBy(test)
+dockerCompose {
+    useComposeFiles = ['docker-compose.yml']
+}
+
+test.doFirst {
+    // exposes "${serviceName}_HOST" and "${serviceName}_TCP_${exposedPort}" environment variables
+    // for example exposes "WEB_HOST" and "WEB_TCP_80" environment variables for service named `web` with exposed port `80`
+    // if service is scaled using scale option, environment variables will be exposed for each service instance like "WEB_1_HOST", "WEB_1_TCP_80", "WEB_2_HOST", "WEB_2_TCP_80" and so on
+    dockerCompose.exposeAsEnvironment(test)
+    // exposes "${serviceName}.host" and "${serviceName}.tcp.${exposedPort}" system properties
+    // for example exposes "web.host" and "web.tcp.80" system properties for service named `web` with exposed port `80`
+    // if service is scaled using scale option, environment variables will be exposed for each service instance like "web_1.host", "web_1.tcp.80", "web_2.host", "web_2.tcp.80" and so on
+    dockerCompose.exposeAsSystemProperties(test)
+    // get information about container of service `web` (declared in docker-compose.yml)
+    def webInfo = dockerCompose.servicesInfos."postgres-covid".firstContainer
+    // pass host and exposed TCP port 80 as custom-named Java System properties
+    systemProperty 'myweb.host', webInfo.host
+    systemProperty 'myweb.port', webInfo.ports[80]
+    // it's possible to read information about exposed UDP ports using webInfo.updPorts[1234]
+}
+
+test {
+    useJUnitPlatform()
+}
